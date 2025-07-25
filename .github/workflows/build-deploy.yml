@@ -69,7 +69,7 @@ jobs:
         environment:
             name: fast-api-production
         steps:
-            # STEPS WITH DEPLOYING TO HEROKU:
+            # STEPS FOR DEPLOYING TO HEROKU:
             # pull our github repo
             # install heroku cli
             # heroku login
@@ -87,3 +87,19 @@ jobs:
                 heroku_api_key: ${{secrets.HEROKU_API_KEY}}
                 heroku_app_name: ${{secrets.HEROKU_APP_NAME}} #Must be unique in Heroku
                 heroku_email: ${{secrets.HEROKU_EMAIL}}
+
+            # STEPS FOR DEPLOYING TO UBUNTU (DIGITAL OCEAN):
+            # login to our ubuntu (SSH into it)
+            # cd /app/src
+            # git pull
+            # systemctl restart api
+            - name: deploy to ubuntu server
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{secrets.PROD_HOST}}
+                username: ${{secrets.PROD_USERNAME}}
+                password: ${{secrets.PROD_PASSWORD}}
+                script: |
+                    cd app/src
+                    git pull
+                    echo ${{secrets.PROD_PASSWORD}} | sudo -S systemctl restart api

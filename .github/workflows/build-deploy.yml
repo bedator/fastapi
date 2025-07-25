@@ -60,5 +60,5 @@ jobs:
                 file: Dockerfile
                 push: true
                 platforms: linux/amd64,linux/arm64
-                tags: ${{ secrets.DOCKER_USERNAME }}/fastapi:latest
+                tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi:latest
                 cache-from: type=local,src=/tmp/.buildx-cache
